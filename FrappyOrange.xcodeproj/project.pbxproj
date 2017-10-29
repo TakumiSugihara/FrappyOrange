@@ -14,6 +14,7 @@
 		59097ABB1FA333B500ECB4CA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59097AB91FA333B500ECB4CA /* LaunchScreen.storyboard */; };
 		59097AC61FA335BD00ECB4CA /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59097AC51FA335BD00ECB4CA /* GameScene.swift */; };
 		59097AC71FA3413600ECB4CA /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59097AC31FA3340700ECB4CA /* SpriteKit.framework */; };
+		592C4D9F1FA6286A0099D38D /* sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 592C4D9E1FA628690099D38D /* sound.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		59097ABC1FA333B500ECB4CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59097AC31FA3340700ECB4CA /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
 		59097AC51FA335BD00ECB4CA /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		592C4D9E1FA628690099D38D /* sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sound.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				59097AB71FA333B500ECB4CA /* Assets.xcassets */,
 				59097AB91FA333B500ECB4CA /* LaunchScreen.storyboard */,
 				59097ABC1FA333B500ECB4CA /* Info.plist */,
+				592C4D9E1FA628690099D38D /* sound.mp3 */,
 			);
 			path = FrappyOrange;
 			sourceTree = "<group>";
@@ -140,6 +143,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				592C4D9F1FA6286A0099D38D /* sound.mp3 in Resources */,
 				59097ABB1FA333B500ECB4CA /* LaunchScreen.storyboard in Resources */,
 				59097AB81FA333B500ECB4CA /* Assets.xcassets in Resources */,
 				59097AB61FA333B500ECB4CA /* Main.storyboard in Resources */,

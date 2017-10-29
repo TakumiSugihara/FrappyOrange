@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -273,10 +274,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         })
         
         // 次のアイテム作成までの待ち時間のアクションを作成
-        let waitAnimation = SKAction.wait(forDuration: 5)
+        let waitAnimation = SKAction.wait(forDuration: 3)
         
         // アイテムを作成->待ち時間->アイテムを作成を無限に繰り替えるアクションを作成
-        let repeatForeverAnimation = SKAction.repeatForever(SKAction.sequence([createItemAnimation, waitAnimation]))
+        let repeatForeverAnimation = SKAction.repeatForever(SKAction.sequence([waitAnimation, createItemAnimation]))
         
         itemNode.run(repeatForeverAnimation)
         }
@@ -333,9 +334,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             return
         }
         
-        if (contact.bodyA.categoryBitMask & scoreCategory) == scoreCategory || (contact.bodyB.categoryBitMask & scoreCategory) == scoreCategory ||
-            (contact.bodyA.categoryBitMask & itemCategory) == itemCategory ||
-            (contact.bodyB.categoryBitMask & itemCategory) == itemCategory{
+        if (contact.bodyA.categoryBitMask & scoreCategory) == scoreCategory || (contact.bodyB.categoryBitMask & scoreCategory) == scoreCategory
+            {
             // スコア用の物体と衝突した
             print("ScoreUp")
             score += 1
@@ -349,7 +349,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 userDefaults.set(bestScore, forKey: "BEST")
                 userDefaults.synchronize()
             }
-        } else {
+        } else if (contact.bodyA.categoryBitMask & itemCategory) == itemCategory ||
+            (contact.bodyB.categoryBitMask & itemCategory) == itemCategory
+        {
+            // アイテムと衝突した
+            print("ScoreUp")
+            score += 1
+            scoreLabelNode.text = "Score:\(score)"
+            
+            // 効果音を出す
+            let soundAction = SKAction.playSoundFileNamed("sound.mp3", waitForCompletion: false)
+            self.run(soundAction)
+            
+            // アイテムを取り除くアクション
+            let removeItem = SKAction.removeFromParent()
+            itemNode.run(removeItem)
+            
+            // 再度アイテム用のノード作成
+            itemNode = SKNode()
+            scrollNode.addChild(itemNode)
+            setupItem()
+
+            // ベストスコア更新か確認する
+            var bestScore = userDefaults.integer(forKey: "BEST")
+            if score > bestScore {
+                bestScore = score
+                bestScoreLabelNode.text = "Best Score:\(bestScore)"
+                userDefaults.set(bestScore, forKey: "BEST")
+                userDefaults.synchronize()
+            }
+
+        }else {
             // 壁か地面と衝突した
             print("GameOver")
             
