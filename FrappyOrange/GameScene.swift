@@ -28,6 +28,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scoreLabelNode:SKLabelNode!
     var bestScoreLabelNode:SKLabelNode!
     let userDefaults:UserDefaults = UserDefaults.standard
+
+    // アイテムスコア
+    var itemScore = 0
+    var itemScoreLabelNode:SKLabelNode!
     
     // SKView上にシーンが表示されたときに呼ばれるメソッド
     override func didMove(to view: SKView) {
@@ -59,6 +63,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupItem()
         
         setupScoreLabel()
+        setupItemScoreLabel()
     }
     
     
@@ -354,8 +359,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             // アイテムと衝突した
             print("ScoreUp")
-            score += 1
-            scoreLabelNode.text = "Score:\(score)"
+            itemScore += 1
+            itemScoreLabelNode.text = "Item:\(itemScore)"
             
             // 効果音を出す
             let soundAction = SKAction.playSoundFileNamed("sound.mp3", waitForCompletion: false)
@@ -430,4 +435,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bestScoreLabelNode.text = "Best Score:\(bestScore)"
         self.addChild(bestScoreLabelNode)
     }
+    
+    func setupItemScoreLabel() {
+        itemScore = 0
+        itemScoreLabelNode = SKLabelNode()
+        itemScoreLabelNode.fontColor = UIColor.black
+        itemScoreLabelNode.position = CGPoint(x: 10, y: self.frame.size.height - 90)
+        itemScoreLabelNode.zPosition = 100 // 一番手前に表示する
+        itemScoreLabelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+        itemScoreLabelNode.text = "item:\(itemScore)"
+        self.addChild(itemScoreLabelNode)
+    }
+
 }
