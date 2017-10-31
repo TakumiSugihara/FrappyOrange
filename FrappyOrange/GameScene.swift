@@ -22,6 +22,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let wallCategory: UInt32 = 1 << 2       // 0...00100
     let scoreCategory: UInt32 = 1 << 3      // 0...01000
     let itemCategory: UInt32 = 1 << 4
+
+    //BGMの読み込み
+    let BGM = SKAudioNode.init(fileNamed: "BGM.mp3")
+    //効果音の読み込み
+    let getAction = SKAction.playSoundFileNamed("get.mp3", waitForCompletion: false)
+    let outAction = SKAction.playSoundFileNamed("out.mp3", waitForCompletion: false)
+
     
     // スコア
     var score = 0
@@ -29,9 +36,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var bestScoreLabelNode:SKLabelNode!
     let userDefaults:UserDefaults = UserDefaults.standard
 
-    // アイテムスコア
-    var itemScore = 0
-    var itemScoreLabelNode:SKLabelNode!
+//    // アイテムスコア
+//    var itemScore = 0
+//    var itemScoreLabelNode:SKLabelNode!
     
     // SKView上にシーンが表示されたときに呼ばれるメソッド
     override func didMove(to view: SKView) {
@@ -63,7 +70,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupItem()
         
         setupScoreLabel()
-        setupItemScoreLabel()
+//        setupItemScoreLabel()
+        
+        //BGMを再生
+        self.addChild(BGM)
     }
     
     
@@ -336,6 +346,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         // ゲームオーバーのときは何もしない
         if scrollNode.speed <= 0 {
+
             return
         }
         
@@ -359,12 +370,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         {
             // アイテムと衝突した
             print("ScoreUp")
-            itemScore += 1
-            itemScoreLabelNode.text = "Item:\(itemScore)"
+            score += 1
+            scoreLabelNode.text = "Score:\(score)"
+//            itemScoreLabelNode.text = "Item:\(itemScore)"
             
             // 効果音を出す
-            let soundAction = SKAction.playSoundFileNamed("sound.mp3", waitForCompletion: false)
-            self.run(soundAction)
+            self.run(getAction)
             
             // アイテムを取り除くアクション
             let removeItem = SKAction.removeFromParent()
@@ -388,6 +399,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // 壁か地面と衝突した
             print("GameOver")
             
+            // 効果音を出す
+            self.run(outAction)
+
             // スクロールを停止させる
             scrollNode.speed = 0
             
@@ -402,7 +416,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func restart() {
         score = 0
-        itemScore = 0
+//        itemScore = 0
         scoreLabelNode.text = String("Score:\(score)")
         
         orange.position = CGPoint(x: self.frame.size.width * 0.2, y:self.frame.size.height * 0.7)
@@ -437,15 +451,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(bestScoreLabelNode)
     }
     
-    func setupItemScoreLabel() {
-        itemScore = 0
-        itemScoreLabelNode = SKLabelNode()
-        itemScoreLabelNode.fontColor = UIColor.black
-        itemScoreLabelNode.position = CGPoint(x: 10, y: self.frame.size.height - 90)
-        itemScoreLabelNode.zPosition = 100 // 一番手前に表示する
-        itemScoreLabelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-        itemScoreLabelNode.text = "Item:\(itemScore)"
-        self.addChild(itemScoreLabelNode)
-    }
+//    func setupItemScoreLabel() {
+//        itemScore = 0
+//        itemScoreLabelNode = SKLabelNode()
+//        itemScoreLabelNode.fontColor = UIColor.black
+//        itemScoreLabelNode.position = CGPoint(x: 10, y: self.frame.size.height - 90)
+//        itemScoreLabelNode.zPosition = 100 // 一番手前に表示する
+//        itemScoreLabelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+//        itemScoreLabelNode.text = "Item:\(itemScore)"
+//        self.addChild(itemScoreLabelNode)
+//    }
 
 }
