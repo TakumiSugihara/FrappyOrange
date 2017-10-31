@@ -402,6 +402,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func restart() {
         score = 0
+        itemScore = 0
         scoreLabelNode.text = String("Score:\(score)")
         
         orange.position = CGPoint(x: self.frame.size.width * 0.2, y:self.frame.size.height * 0.7)
@@ -443,7 +444,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         itemScoreLabelNode.position = CGPoint(x: 10, y: self.frame.size.height - 90)
         itemScoreLabelNode.zPosition = 100 // 一番手前に表示する
         itemScoreLabelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-        itemScoreLabelNode.text = "item:\(itemScore)"
+        itemScoreLabelNode.text = "Item:\(itemScore)"
         self.addChild(itemScoreLabelNode)
     }
 
